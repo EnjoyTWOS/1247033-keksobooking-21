@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Volodymyr Danylyuk](https://up.htmlacademy.ru/javascript/21/user/1247033).
-* Наставник: `Неизвестно`.
+* Наставник: Виталий Усик.
 
 ---
 
