@@ -9,6 +9,14 @@ const GUESTS_QUANTITY = [0, 1, 2];
 const CHECK_IN_OUT_TIME = [`12:00`, `13:00`, `14:00`];
 let mapAvatarArray = [];
 let mapsCardTemplateArray = [];
+const MAP_PIN_HEIGHT = 44;
+const MAP_PIN_WIDTH = 40;
+// Активируем карту
+const map = document.querySelector(`.map`);
+map.classList.remove(`map--faded`);
+// Находим шаблон для копирование и элемент, куда будет копироваться информация
+const mapPins = map.querySelector(`.map__pins`);
+const pinTemplate = document.querySelector(`#pin`).content;
 
 // Записываем функции
 const rand = (min, max) => {
@@ -31,11 +39,14 @@ const renderAvatar = (imageQuantity) =>{
 
 renderAvatar(pinsQuantity);
 
-// Создаем обьект карточки
-const mapsCardTemplate =
+
+// Создаем массив обьектов
+const renderMapsCardsArray = () => {
+  for (let i = 0; i < pinsQuantity; i++) {
+    let mapsCardTemplate =
   {
     author: {
-      avatar: mapAvatarArray[0]
+      avatar: mapAvatarArray[i]
     },
     offer: {
       title: `Предложение: `,
@@ -51,57 +62,33 @@ const mapsCardTemplate =
       photos: MAP_PHOTOS
     },
     location: {
-      x: rand(0, 570),
-      y: rand(0, 375)
+      x: rand(0, 1100),
+      y: rand(300, 600)
     }
   };
-
-// Создаем массив обьектов
-const renderMapsCardsArray = (mapsCard) => {
-  for (let i = 0; i < pinsQuantity; i++) {
-    mapsCard =
-  {
-    author: {
-      avatar: mapAvatarArray[i]
-    },
-    offer: {
-      title: `Предложение: `,
-      adress: `600, 350`,
-      price: 10000,
-      type: MAP_ACCOMODATION[i],
-      rooms: ROOMS_QUANTITY[i],
-      guests: GUESTS_QUANTITY[i],
-      checkin: CHECK_IN_OUT_TIME[i],
-      checkout: CHECK_IN_OUT_TIME[i],
-      features: MAP_FEATURES,
-      description: `Лучшее жилье`,
-      photos: MAP_PHOTOS
-    },
-    location: {
-      x: rand(0, 570),
-      y: rand(0, 375)
-    }
-  };
-    mapsCardTemplateArray.push(mapsCard);
+    mapsCardTemplateArray.push(mapsCardTemplate);
   }
   return mapsCardTemplateArray;
 };
 
-renderMapsCardsArray(mapsCardTemplate);
+renderMapsCardsArray();
 
-// Активируем карту
-const map = document.querySelector(`.map`);
-map.classList.remove(`map--faded`);
-
-// Находим шаблон для копирование и элемент, куда будет копироваться информация
-const mapPins = document.querySelector(`.map__pins`);
-const pinTemplate = document.querySelector(`#pin`).content;
-
-
-// Выводим метки на карту
-for (let i = 0; i < pinsQuantity; i++) {
+// Создаем отметку на карте
+const renderPin = (pin) => {
   const mapPin = pinTemplate.cloneNode(true);
 
-  mapPins.appendChild(mapPin);
+  mapPin.querySelector(`.map__pin`).style.left = pin.location.x - MAP_PIN_WIDTH / 2 + `px`;
+  mapPin.querySelector(`.map__pin`).style.top = pin.location.y - MAP_PIN_HEIGHT + `px`;
+  mapPin.querySelector(`img`).setAttribute(`src`, pin.author.avatar);
+  mapPin.querySelector(`img`).setAttribute(`alt`, pin.offer.title);
+
+  return mapPin;
+};
+
+// Создаем документ-фрагмент и через него выводим метки на карту
+const fragment = document.createDocumentFragment();
+for (let i = 0; i < mapsCardTemplateArray.length; i++) {
+  fragment.appendChild(renderPin(mapsCardTemplateArray[i]));
 }
 
+mapPins.appendChild(fragment);
