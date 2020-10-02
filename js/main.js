@@ -12,7 +12,12 @@ let mapsCardTemplateArray = [];
 
 // Записываем функции
 const rand = (min, max) => {
-  return min + Math.floor(Math.random()) * (max - min);
+  return min + Math.floor(Math.random() * (max - min));
+};
+
+const getRandomArrI = (arr) => {
+  let randomize = Math.floor(Math.random() * arr.length);
+  return arr[randomize];
 };
 
 const renderAvatar = (imageQuantity) =>{
@@ -36,11 +41,11 @@ const mapsCardTemplate =
       title: `Предложение: `,
       adress: `600, 350`,
       price: 10000,
-      type: MAP_ACCOMODATION[0],
-      rooms: ROOMS_QUANTITY[0],
-      guests: GUESTS_QUANTITY[0],
-      checkin: CHECK_IN_OUT_TIME[0],
-      checkout: CHECK_IN_OUT_TIME[0],
+      type: getRandomArrI(MAP_ACCOMODATION),
+      rooms: getRandomArrI(ROOMS_QUANTITY),
+      guests: getRandomArrI(GUESTS_QUANTITY),
+      checkin: getRandomArrI(CHECK_IN_OUT_TIME),
+      checkout: getRandomArrI(CHECK_IN_OUT_TIME),
       features: MAP_FEATURES,
       description: `Лучшее жилье`,
       photos: MAP_PHOTOS
