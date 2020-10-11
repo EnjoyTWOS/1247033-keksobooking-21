@@ -1,30 +1,35 @@
 "use strict";
 // Записываем константы и переменные
-const pinsQuantity = 8;
+const PINS_QUANTITY = 8;
 const MAP_FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const MAP_PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
-const MAP_ACCOMODATION = [`flat`, `palace`, `house `, `bungalow`];
+const MAP_ACCOMODATION_LIST = [`flat`, `palace`, `house `, `bungalow`];
 const ROOMS_QUANTITY = [1, 2, 3];
 const GUESTS_QUANTITY = [0, 1, 2];
 const CHECK_IN_OUT_TIME = [`12:00`, `13:00`, `14:00`];
-let mapAvatarArray = [];
-let mapsCardTemplateArray = [];
 const MAP_PIN_HEIGHT = 44;
 const MAP_PIN_WIDTH = 40;
-// Активируем карту
-const map = document.querySelector(`.map`);
-map.classList.remove(`map--faded`);
+const mapAvatarArray = [];
+const mapsCardTemplateArray = [];
+const mapElement = document.querySelector(`.map`);
+const fragment = document.createDocumentFragment();
+
+mapElement.classList.remove(`map--faded`);
 // Находим шаблон для копирование и элемент, куда будет копироваться информация
-const mapPins = map.querySelector(`.map__pins`);
+const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content;
 
 // Записываем функции
+const showMapElement = () => {
+  mapElement.classList.remove(`map--faded`);
+};
+
 const rand = (min, max) => {
   return min + Math.floor(Math.random() * (max - min));
 };
 
 const getRandomArrI = (arr) => {
-  let randomize = Math.floor(Math.random() * arr.length);
+  const randomize = Math.floor(Math.random() * arr.length);
   return arr[randomize];
 };
 
@@ -32,17 +37,12 @@ const renderAvatar = (imageQuantity) =>{
   for (let i = 1; i <= imageQuantity; i++) {
     mapAvatarArray.push(`img/avatars/user0` + i + `.png`);
   }
-
-
   return mapAvatarArray;
 };
 
-renderAvatar(pinsQuantity);
-
-
 // Создаем массив обьектов
 const renderMapsCardsArray = () => {
-  for (let i = 0; i < pinsQuantity; i++) {
+  for (let i = 0; i < PINS_QUANTITY; i++) {
     let mapsCardTemplate =
   {
     author: {
@@ -52,7 +52,7 @@ const renderMapsCardsArray = () => {
       title: `Предложение: `,
       adress: `600, 350`,
       price: 10000,
-      type: getRandomArrI(MAP_ACCOMODATION),
+      type: getRandomArrI(MAP_ACCOMODATION_LIST),
       rooms: getRandomArrI(ROOMS_QUANTITY),
       guests: getRandomArrI(GUESTS_QUANTITY),
       checkin: getRandomArrI(CHECK_IN_OUT_TIME),
@@ -71,7 +71,14 @@ const renderMapsCardsArray = () => {
   return mapsCardTemplateArray;
 };
 
-renderMapsCardsArray();
+const init = () => {
+  renderAvatar(PINS_QUANTITY);
+  showMapElement();
+  renderMapsCardsArray();
+};
+
+// Вызываем функции
+init();
 
 // Создаем отметку на карте
 const renderPin = (pin) => {
@@ -86,9 +93,12 @@ const renderPin = (pin) => {
 };
 
 // Создаем документ-фрагмент и через него выводим метки на карту
-const fragment = document.createDocumentFragment();
-for (let i = 0; i < mapsCardTemplateArray.length; i++) {
-  fragment.appendChild(renderPin(mapsCardTemplateArray[i]));
-}
 
-mapPins.appendChild(fragment);
+const renderMapPinsTemplate = () => {
+  for (let i = 0; i < mapsCardTemplateArray.length; i++) {
+    fragment.appendChild(renderPin(mapsCardTemplateArray[i]));
+  }
+  mapPinsTemplate.appendChild(fragment);
+};
+
+renderMapPinsTemplate();
