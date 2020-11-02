@@ -13,14 +13,44 @@ const mapAvatarArray = [];
 const mapsCardTemplateArray = [];
 const mapElement = document.querySelector(`.map`);
 const fragment = document.createDocumentFragment();
-
+const mapPinMain = document.querySelector(`.map__pin--main`);
+const adForm = document.querySelector(`.ad-form`);
+const formHeader = document.querySelector(`.ad-form-header`);
+const formElements = document.querySelectorAll(`.ad-form__element`);
+const mapFilters = document.querySelectorAll(`.map__filter`);
+const mapFeatures = document.querySelectorAll(`.map__feature`);
 // Находим шаблон для копирование и элемент, куда будет копироваться информация
 const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content;
 
 // Записываем функции
-const showMapElement = () => {
+const disableElemnts = () => {
+  formHeader.setAttribute(`disabled`, `disabled`);
+  for (const formElement of formElements) {
+    formElement.setAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFilter of mapFilters) {
+    mapFilter.setAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFeature of mapFeatures) {
+    mapFeature.setAttribute(`disabled`, `disabled`);
+  }
+};
+
+const enableElements = () => {
   mapElement.classList.remove(`map--faded`);
+  adForm.classList.remove(`ad-form--disabled`);
+  formHeader.removeAttribute(`disabled`, `disabled`);
+  for (const formElement of formElements) {
+    formElement.removeAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFilter of mapFilters) {
+    mapFilter.removeAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFeature of mapFeatures) {
+    mapFeature.removeAttribute(`disabled`, `disabled`);
+  }
+  renderMapPinsTemplate();
 };
 
 const rand = (min, max) => {
@@ -38,6 +68,23 @@ const renderAvatar = (imageQuantity) =>{
   }
   return mapAvatarArray;
 };
+
+const isMainButton = (evt) => {
+  if (typeof evt === `object`) {
+    switch (evt.button) {
+      case 0:
+        enableElements();
+    }
+  }
+};
+
+const isEnter = () => {
+
+};
+
+// Добавляем обработчики событий
+mapPinMain.addEventListener(`mousedown`, isMainButton);
+mapPinMain.addEventListener(`keydown`, isEnter);
 
 // Создаем массив обьектов
 const renderMapsCardsArray = () => {
@@ -72,9 +119,9 @@ const renderMapsCardsArray = () => {
 
 const init = () => {
   renderAvatar(PINS_QUANTITY);
-  showMapElement();
   renderMapsCardsArray();
-  renderMapPinsTemplate();
+
+  disableElemnts();
 };
 
 
