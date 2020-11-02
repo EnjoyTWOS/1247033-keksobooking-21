@@ -14,7 +14,6 @@ const mapsCardTemplateArray = [];
 const mapElement = document.querySelector(`.map`);
 const fragment = document.createDocumentFragment();
 
-mapElement.classList.remove(`map--faded`);
 // Находим шаблон для копирование и элемент, куда будет копироваться информация
 const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content;
@@ -43,7 +42,7 @@ const renderAvatar = (imageQuantity) =>{
 // Создаем массив обьектов
 const renderMapsCardsArray = () => {
   for (let i = 0; i < PINS_QUANTITY; i++) {
-    let mapsCardTemplate =
+    const mapsCardTemplate =
   {
     author: {
       avatar: mapAvatarArray[i]
@@ -75,10 +74,9 @@ const init = () => {
   renderAvatar(PINS_QUANTITY);
   showMapElement();
   renderMapsCardsArray();
+  renderMapPinsTemplate();
 };
 
-// Вызываем функции
-init();
 
 // Создаем отметку на карте
 const renderPin = (pin) => {
@@ -101,4 +99,5 @@ const renderMapPinsTemplate = () => {
   mapPinsTemplate.appendChild(fragment);
 };
 
-renderMapPinsTemplate();
+// Вызываем функции
+init();
