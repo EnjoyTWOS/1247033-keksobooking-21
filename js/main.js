@@ -103,35 +103,31 @@ const isEnter = (evt) => {
 
 const isRoomsValid = () => {
   if (roomsQuantityList.value === `1`) {
-    roomsQuantityList.setCustomValidity(`для 1 гостя`);
+    if (guestsQuantityList.value !== `1`) {
+      guestsQuantityList.setCustomValidity(`для 1 гостя`);
+    }
   } else if (roomsQuantityList.value === `2`) {
-    roomsQuantityList.setCustomValidity(`для 2 гостей или для 1 гостя`);
+    if (guestsQuantityList.value !== `1` || guestsQuantityList.value !== `2`) {
+      guestsQuantityList.setCustomValidity(`для 2 гостей или для 1 гостя`);
+    }
   } else if (roomsQuantityList.value === `3`) {
-    roomsQuantityList.setCustomValidity(`для 3 гостей, для 2 гостей или для 1 гостя`);
+    if (guestsQuantityList.value === `0`) {
+      guestsQuantityList.setCustomValidity(`для 3 гостей, для 2 гостей или для 1 гостя`);
+    }
   } else if (roomsQuantityList.value === `100`) {
-    roomsQuantityList.setCustomValidity(`не для гостей`);
+    if (guestsQuantityList.value !== `0`) {
+      guestsQuantityList.setCustomValidity(`не для гостей`);
+    }
+  } else {
+    guestsQuantityList.setCustomValidity(``);
   }
   roomsQuantityList.reportValidity();
-};
-
-const isGuestsValid = () => {
-  if (guestsQuantityList.value === `1`) {
-    guestsQuantityList.setCustomValidity(`1, 2 или 3 комнаты`);
-  } else if (guestsQuantityList.value === `2`) {
-    guestsQuantityList.setCustomValidity(`2 или 3 комнаты`);
-  } else if (guestsQuantityList.value === `3`) {
-    guestsQuantityList.setCustomValidity(`только 3 комнаты`);
-  } else if (guestsQuantityList.value === `0`) {
-    guestsQuantityList.setCustomValidity(`не для гостей`);
-  }
-  guestsQuantityList.reportValidity();
 };
 
 // Добавляем обработчики событий
 mapPinMain.addEventListener(`mousedown`, isMainButton);
 mapPinMain.addEventListener(`keydown`, isEnter);
 roomsQuantityList.addEventListener(`change`, isRoomsValid);
-guestsQuantityList.addEventListener(`change`, isGuestsValid);
 
 // Создаем массив обьектов
 const renderMapsCardsArray = () => {
