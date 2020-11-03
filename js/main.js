@@ -23,6 +23,8 @@ const formElements = document.querySelectorAll(`.ad-form__element`);
 const mapFilters = document.querySelectorAll(`.map__filter`);
 const mapFeatures = document.querySelectorAll(`.map__feature`);
 const formAdressInput = document.querySelector(`#address`);
+const roomsQuantityList = document.querySelector(`#room_number`);
+const guestsQuantityList = document.querySelector(`#capacity`);
 // Находим шаблон для копирование и элемент, куда будет копироваться информация
 const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content;
@@ -99,9 +101,37 @@ const isEnter = (evt) => {
   }
 };
 
+const isRoomsValid = () => {
+  if (roomsQuantityList.value === `1`) {
+    roomsQuantityList.setCustomValidity(`для 1 гостя`);
+  } else if (roomsQuantityList.value === `2`) {
+    roomsQuantityList.setCustomValidity(`для 2 гостей или для 1 гостя`);
+  } else if (roomsQuantityList.value === `3`) {
+    roomsQuantityList.setCustomValidity(`для 3 гостей, для 2 гостей или для 1 гостя`);
+  } else if (roomsQuantityList.value === `100`) {
+    roomsQuantityList.setCustomValidity(`не для гостей`);
+  }
+  roomsQuantityList.reportValidity();
+};
+
+const isGuestsValid = () => {
+  if (guestsQuantityList.value === `1`) {
+    guestsQuantityList.setCustomValidity(`1, 2 или 3 комнаты`);
+  } else if (guestsQuantityList.value === `2`) {
+    guestsQuantityList.setCustomValidity(`2 или 3 комнаты`);
+  } else if (guestsQuantityList.value === `3`) {
+    guestsQuantityList.setCustomValidity(`только 3 комнаты`);
+  } else if (guestsQuantityList.value === `0`) {
+    guestsQuantityList.setCustomValidity(`не для гостей`);
+  }
+  guestsQuantityList.reportValidity();
+};
+
 // Добавляем обработчики событий
 mapPinMain.addEventListener(`mousedown`, isMainButton);
 mapPinMain.addEventListener(`keydown`, isEnter);
+roomsQuantityList.addEventListener(`change`, isRoomsValid);
+guestsQuantityList.addEventListener(`change`, isGuestsValid);
 
 // Создаем массив обьектов
 const renderMapsCardsArray = () => {
