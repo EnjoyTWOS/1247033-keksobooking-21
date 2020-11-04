@@ -121,7 +121,7 @@ const isRoomsValid = () => {
   } else {
     guestsQuantityList.setCustomValidity(``);
   }
-  roomsQuantityList.reportValidity();
+  guestsQuantityList.reportValidity();
 };
 
 // Добавляем обработчики событий
