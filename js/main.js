@@ -12,6 +12,7 @@ const MAP_PIN_WIDTH = 50;
 const MAP_PIN_MAIN_ACTIVE_HEIGHT = 84;
 const MAP_PIN_MAIN_DISABLED_HEIGHT = 62;
 const MAP_PIN_MAIN_WIDTH = 62;
+const ENTER_KEY = `Enter`;
 const mapAvatarArray = [];
 const mapsCardTemplateArray = [];
 const mapElement = document.querySelector(`.map`);
@@ -87,15 +88,14 @@ const giveAdressActive = () => {
 
 const isMainButton = (evt) => {
   if (typeof evt === `object`) {
-    switch (evt.button) {
-      case 0:
-        enableElements();
+    if (evt.button === 0) {
+      enableElements();
     }
   }
 };
 
 const isEnter = (evt) => {
-  if (evt.key === `Enter`) {
+  if (evt.key === ENTER_KEY) {
     evt.preventDefault();
     enableElements();
   }
