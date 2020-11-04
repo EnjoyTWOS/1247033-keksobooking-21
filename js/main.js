@@ -139,7 +139,7 @@ const renderMapsCardsArray = () => {
     },
     offer: {
       title: `Предложение: `,
-      adress: `600, 350`,
+      adress: `location.x, location.y`,
       price: 10000,
       type: getRandomArrI(MAP_ACCOMODATION_LIST),
       rooms: getRandomArrI(ROOMS_QUANTITY),
