@@ -7,20 +7,58 @@ const MAP_ACCOMODATION_LIST = [`flat`, `palace`, `house `, `bungalow`];
 const ROOMS_QUANTITY = [1, 2, 3];
 const GUESTS_QUANTITY = [0, 1, 2];
 const CHECK_IN_OUT_TIME = [`12:00`, `13:00`, `14:00`];
-const MAP_PIN_HEIGHT = 44;
-const MAP_PIN_WIDTH = 40;
+const MAP_PIN_HEIGHT = 70;
+const MAP_PIN_WIDTH = 50;
+const MAP_PIN_MAIN_ACTIVE_HEIGHT = 84;
+const MAP_PIN_MAIN_DISABLED_HEIGHT = 62;
+const MAP_PIN_MAIN_WIDTH = 62;
+const ENTER_KEY = `Enter`;
 const mapAvatarArray = [];
 const mapsCardTemplateArray = [];
 const mapElement = document.querySelector(`.map`);
 const fragment = document.createDocumentFragment();
-
+const mapPinMain = document.querySelector(`.map__pin--main`);
+const adForm = document.querySelector(`.ad-form`);
+const formHeader = document.querySelector(`.ad-form-header`);
+const formElements = document.querySelectorAll(`.ad-form__element`);
+const mapFilters = document.querySelectorAll(`.map__filter`);
+const mapFeatures = document.querySelectorAll(`.map__feature`);
+const formAdressInput = document.querySelector(`#address`);
+const roomsQuantityList = document.querySelector(`#room_number`);
+const guestsQuantityList = document.querySelector(`#capacity`);
 // Находим шаблон для копирование и элемент, куда будет копироваться информация
 const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content;
 
 // Записываем функции
-const showMapElement = () => {
+const disableElemnts = () => {
+  formHeader.setAttribute(`disabled`, `disabled`);
+  for (const formElement of formElements) {
+    formElement.setAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFilter of mapFilters) {
+    mapFilter.setAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFeature of mapFeatures) {
+    mapFeature.setAttribute(`disabled`, `disabled`);
+  }
+};
+
+const enableElements = () => {
   mapElement.classList.remove(`map--faded`);
+  adForm.classList.remove(`ad-form--disabled`);
+  formHeader.removeAttribute(`disabled`, `disabled`);
+  for (const formElement of formElements) {
+    formElement.removeAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFilter of mapFilters) {
+    mapFilter.removeAttribute(`disabled`, `disabled`);
+  }
+  for (const mapFeature of mapFeatures) {
+    mapFeature.removeAttribute(`disabled`, `disabled`);
+  }
+  renderMapPinsTemplate();
+  giveAdressActive();
 };
 
 const rand = (min, max) => {
@@ -32,12 +70,64 @@ const getRandomArrI = (arr) => {
   return arr[randomize];
 };
 
-const renderAvatar = (imageQuantity) =>{
+const renderAvatar = (imageQuantity) => {
   for (let i = 1; i <= imageQuantity; i++) {
     mapAvatarArray.push(`img/avatars/user0` + i + `.png`);
   }
   return mapAvatarArray;
 };
+
+
+const giveAdressDisabled = () => {
+  formAdressInput.value = (parseInt(mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(mapPinMain.style.top, 10) + MAP_PIN_MAIN_DISABLED_HEIGHT / 2);
+};
+
+const giveAdressActive = () => {
+  formAdressInput.value = (parseInt(mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(mapPinMain.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
+};
+
+const isMainButton = (evt) => {
+  if (typeof evt === `object`) {
+    if (evt.button === 0) {
+      enableElements();
+    }
+  }
+};
+
+const isEnter = (evt) => {
+  if (evt.key === ENTER_KEY) {
+    evt.preventDefault();
+    enableElements();
+  }
+};
+
+const isRoomsValid = () => {
+  if (roomsQuantityList.value === `1`) {
+    if (guestsQuantityList.value !== `1`) {
+      guestsQuantityList.setCustomValidity(`для 1 гостя`);
+    }
+  } else if (roomsQuantityList.value === `2`) {
+    if (guestsQuantityList.value !== `1` || guestsQuantityList.value !== `2`) {
+      guestsQuantityList.setCustomValidity(`для 2 гостей или для 1 гостя`);
+    }
+  } else if (roomsQuantityList.value === `3`) {
+    if (guestsQuantityList.value === `0`) {
+      guestsQuantityList.setCustomValidity(`для 3 гостей, для 2 гостей или для 1 гостя`);
+    }
+  } else if (roomsQuantityList.value === `100`) {
+    if (guestsQuantityList.value !== `0`) {
+      guestsQuantityList.setCustomValidity(`не для гостей`);
+    }
+  } else {
+    guestsQuantityList.setCustomValidity(``);
+  }
+  guestsQuantityList.reportValidity();
+};
+
+// Добавляем обработчики событий
+mapPinMain.addEventListener(`mousedown`, isMainButton);
+mapPinMain.addEventListener(`keydown`, isEnter);
+roomsQuantityList.addEventListener(`change`, isRoomsValid);
 
 // Создаем массив обьектов
 const renderMapsCardsArray = () => {
@@ -49,7 +139,7 @@ const renderMapsCardsArray = () => {
     },
     offer: {
       title: `Предложение: `,
-      adress: `600, 350`,
+      adress: `location.x, location.y`,
       price: 10000,
       type: getRandomArrI(MAP_ACCOMODATION_LIST),
       rooms: getRandomArrI(ROOMS_QUANTITY),
@@ -72,9 +162,9 @@ const renderMapsCardsArray = () => {
 
 const init = () => {
   renderAvatar(PINS_QUANTITY);
-  showMapElement();
   renderMapsCardsArray();
-  renderMapPinsTemplate();
+  giveAdressDisabled();
+  disableElemnts();
 };
 
 
