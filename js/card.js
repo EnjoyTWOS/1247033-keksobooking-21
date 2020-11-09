@@ -1,5 +1,28 @@
 'use strict';
+
 (() => {
+  const PINS_QUANTITY = 8;
+  const MAP_FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
+  const MAP_PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
+  const MAP_ACCOMODATION_LIST = [`flat`, `palace`, `house `, `bungalow`];
+  const ROOMS_QUANTITY = [1, 2, 3];
+  const GUESTS_QUANTITY = [0, 1, 2];
+  const CHECK_IN_OUT_TIME = [`12:00`, `13:00`, `14:00`];
+  const mapAvatarArray = [];
+  const mapsCardTemplateArray = [];
+
+  const init = () => {
+    renderAvatar(PINS_QUANTITY);
+  };
+
+  const renderAvatar = (imageQuantity) => {
+    for (let i = 1; i <= imageQuantity; i++) {
+      mapAvatarArray.push(`img/avatars/user0` + i + `.png`);
+    }
+    return mapAvatarArray;
+  };
+
+  init();
 
   window.card = {
     renderMapsCardsArray() {
@@ -31,28 +54,6 @@
       }
       return mapsCardTemplateArray;
     },
+    mapsCardTemplateArray
   };
-
-  const PINS_QUANTITY = 8;
-  const MAP_FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-  const MAP_PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
-  const MAP_ACCOMODATION_LIST = [`flat`, `palace`, `house `, `bungalow`];
-  const ROOMS_QUANTITY = [1, 2, 3];
-  const GUESTS_QUANTITY = [0, 1, 2];
-  const CHECK_IN_OUT_TIME = [`12:00`, `13:00`, `14:00`];
-  const mapAvatarArray = [];
-  const mapsCardTemplateArray = [];
-
-  const init = () => {
-    renderAvatar(PINS_QUANTITY);
-  };
-
-  const renderAvatar = (imageQuantity) => {
-    for (let i = 1; i <= imageQuantity; i++) {
-      mapAvatarArray.push(`img/avatars/user0` + i + `.png`);
-    }
-    return mapAvatarArray;
-  };
-
-  init();
 })();

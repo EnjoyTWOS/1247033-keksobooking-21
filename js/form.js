@@ -1,12 +1,6 @@
 'use strict';
 
 (() => {
-  window.form = {
-    giveAdressActive() {
-      formAdressInput.value = (parseInt(window.map.mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.map.mapPinMain.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
-    }
-  };
-
   const MAP_PIN_MAIN_ACTIVE_HEIGHT = 84;
   const MAP_PIN_MAIN_DISABLED_HEIGHT = 62;
   const MAP_PIN_MAIN_WIDTH = 62;
@@ -48,4 +42,10 @@
   roomsQuantityList.addEventListener(`change`, isRoomsValid);
 
   init();
+
+  window.form = {
+    giveAdressActive() {
+      formAdressInput.value = (parseInt(window.map.mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.map.mapPinMain.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
+    }
+  };
 })();

@@ -1,6 +1,9 @@
 'use strict';
 
 (() => {
+  const MAP_PIN_HEIGHT = 70;
+  const MAP_PIN_WIDTH = 50;
+  const pinTemplate = document.querySelector(`#pin`).content;
 
   window.pin = {
     renderPin(pin) {
@@ -14,8 +17,4 @@
       return mapPin;
     }
   };
-
-  const MAP_PIN_HEIGHT = 70;
-  const MAP_PIN_WIDTH = 50;
-  const pinTemplate = document.querySelector(`#pin`).content;
 })();

@@ -1,11 +1,6 @@
 'use strict';
 
 (() => {
-
-  window.map = {
-    mapPinMain: document.querySelector(`.map__pin--main`),
-  };
-
   const mapElement = document.querySelector(`.map`);
   const fragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
@@ -14,6 +9,7 @@
   const mapFilters = document.querySelectorAll(`.map__filter`);
   const mapFeatures = document.querySelectorAll(`.map__feature`);
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
+  const mapPinMain = document.querySelector(`.map__pin--main`);
 
   const init = () => {
     disableElemnts();
@@ -57,12 +53,16 @@
     mapPinsTemplate.appendChild(fragment);
   };
 
-  window.map.mapPinMain.addEventListener(`mousedown`, (evt) => {
+  mapPinMain.addEventListener(`mousedown`, (evt) => {
     window.util.isMainButton(evt, enableElements);
   });
-  window.map.mapPinMain.addEventListener(`keydown`, (evt) => {
+  mapPinMain.addEventListener(`keydown`, (evt) => {
     window.util.isEnter(evt, enableElements);
   });
 
   init();
+
+  window.map = {
+    mapPinMain: document.querySelector(`.map__pin--main`),
+  };
 })();
