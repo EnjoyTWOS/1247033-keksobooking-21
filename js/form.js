@@ -13,7 +13,7 @@
   };
 
   const giveAdressDisabled = () => {
-    formAdressInput.value = (parseInt(window.map.mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.map.mapPinMain.style.top, 10) + MAP_PIN_MAIN_DISABLED_HEIGHT / 2);
+    formAdressInput.value = (parseInt(window.map.pinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.map.pinMain.style.top, 10) + MAP_PIN_MAIN_DISABLED_HEIGHT / 2);
   };
 
   const isRoomsValid = () => {
@@ -45,7 +45,7 @@
 
   window.form = {
     giveAdressActive() {
-      formAdressInput.value = (parseInt(window.map.mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.map.mapPinMain.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
+      formAdressInput.value = (parseInt(window.map.pinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.map.pinMain.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
     }
   };
 })();

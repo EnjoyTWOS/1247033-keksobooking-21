@@ -10,10 +10,11 @@
   const mapFeatures = document.querySelectorAll(`.map__feature`);
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
+  let cardsTemplateArray = [];
 
   const init = () => {
     disableElemnts();
-    window.card.renderMapsCardsArray();
+    cardsTemplateArray = window.card.renderMapsCardsArray();
   };
 
   const enableElements = () => {
@@ -47,8 +48,8 @@
   };
 
   const successHandler = (pins) => {
-    for (let i = 0; i < window.card.mapsCardTemplateArray.length; i++) {
-      fragment.appendChild(window.pin.renderPin(pins[i]));
+    for (let i = 0; i < cardsTemplateArray.length; i++) {
+      fragment.appendChild(window.pin.render(pins[i]));
     }
     mapPinsTemplate.appendChild(fragment);
   };
@@ -76,6 +77,6 @@
   init();
 
   window.map = {
-    mapPinMain: document.querySelector(`.map__pin--main`),
+    pinMain: document.querySelector(`.map__pin--main`),
   };
 })();

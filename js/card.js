@@ -11,10 +11,6 @@
   const mapAvatarArray = [];
   const mapsCardTemplateArray = [];
 
-  const init = () => {
-    renderAvatar(PINS_QUANTITY);
-  };
-
   const renderAvatar = (imageQuantity) => {
     for (let i = 1; i <= imageQuantity; i++) {
       mapAvatarArray.push(`img/avatars/user0` + i + `.png`);
@@ -22,15 +18,13 @@
     return mapAvatarArray;
   };
 
-  init();
-
   window.card = {
     renderMapsCardsArray() {
       for (let i = 0; i < PINS_QUANTITY; i++) {
         const mapsCardTemplate =
       {
         author: {
-          avatar: mapAvatarArray[i]
+          avatar: renderAvatar(PINS_QUANTITY)[i]
         },
         offer: {
           title: `Предложение: `,
@@ -54,6 +48,5 @@
       }
       return mapsCardTemplateArray;
     },
-    mapsCardTemplateArray
   };
 })();

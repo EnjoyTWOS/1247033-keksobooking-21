@@ -6,7 +6,7 @@
   const pinTemplate = document.querySelector(`#pin`).content;
 
   window.pin = {
-    renderPin(pin) {
+    render(pin) {
       const mapPin = pinTemplate.cloneNode(true);
 
       mapPin.querySelector(`.map__pin`).style.left = pin.location.x - MAP_PIN_WIDTH / 2 + `px`;
