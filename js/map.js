@@ -29,8 +29,8 @@
     for (const mapFeature of mapFeatures) {
       mapFeature.removeAttribute(`disabled`, `disabled`);
     }
-    renderMapPinsTemplate();
     window.form.giveAdressActive();
+    window.backend.load(successHandler, errorHandler);
   };
 
   const disableElemnts = () => {
@@ -46,11 +46,23 @@
     }
   };
 
-  const renderMapPinsTemplate = () => {
+  const successHandler = (pins) => {
     for (let i = 0; i < window.card.mapsCardTemplateArray.length; i++) {
-      fragment.appendChild(window.pin.renderPin(window.card.mapsCardTemplateArray[i]));
+      fragment.appendChild(window.pin.renderPin(pins[i]));
     }
     mapPinsTemplate.appendChild(fragment);
+  };
+
+  const errorHandler = function (errorMessage) {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
   mapPinMain.addEventListener(`mousedown`, (evt) => {
@@ -59,6 +71,7 @@
   mapPinMain.addEventListener(`keydown`, (evt) => {
     window.util.isEnter(evt, enableElements);
   });
+
 
   init();
 
