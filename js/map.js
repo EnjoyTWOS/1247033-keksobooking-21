@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const pinsQuantity = 5;
   const mapElement = document.querySelector(`.map`);
   const fragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
@@ -10,6 +11,7 @@
   const mapFeatures = document.querySelectorAll(`.map__feature`);
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
+  // eslint-disable-next-line no-unused-vars
   let cardsTemplateArray = [];
 
   const init = () => {
@@ -48,7 +50,7 @@
   };
 
   const successHandler = (pins) => {
-    for (let i = 0; i < cardsTemplateArray.length; i++) {
+    for (let i = 0; i < pinsQuantity; i++) {
       fragment.appendChild(window.pin.render(pins[i]));
     }
     mapPinsTemplate.appendChild(fragment);
