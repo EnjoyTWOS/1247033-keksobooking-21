@@ -21,6 +21,16 @@
     return mapAvatarArray;
   };
 
+  const renderPhotos = (card, mapCard) => {
+    mapCard.querySelector(`.popup__photo`).setAttribute(`src`, card.offer.photos[0]);
+    for (let i = 1; i < card.offer.photos.length; i++) {
+      const photosMapCard = mapCard.querySelector(`.popup__photo`).cloneNode(true);
+      photosMapCard.setAttribute(`src`, card.offer.photos[i]);
+
+      photosFragment.appendChild(photosMapCard);
+    }
+    mapCard.querySelector(`.popup__photos`).appendChild(photosFragment);
+  };
 
   window.card = {
     renderMapsCardsArray() {
@@ -63,17 +73,12 @@
       mapCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + card.offer.checkin + `, выезд до ` + card.offer.checkout;
       mapCard.querySelector(`.popup__description`).textContent = card.offer.description;
       mapCard.querySelector(`.popup__avatar`).setAttribute(`src`, card.author.avatar);
+
       if (card.offer.photos.length > 0) {
-        mapCard.querySelector(`.popup__photo`).setAttribute(`src`, card.offer.photos[0]);
-        for (let i = 1; i < card.offer.photos.length; i++) {
-          const photosMapCard = mapCard.querySelector(`.popup__photo`).cloneNode(true);
-          photosMapCard.setAttribute(`src`, card.offer.photos[i]);
-
-          photosFragment.appendChild(photosMapCard);
-        }
-        mapCard.querySelector(`.popup__photos`).appendChild(photosFragment);
+        renderPhotos(card, mapCard);
+      } else {
+        mapCard.querySelector(`.popup__photo`).classList.add(`visually-hidden`);
       }
-
 
       return mapCard;
     }
