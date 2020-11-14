@@ -13,6 +13,7 @@
   const mapsCardTemplateArray = [];
   const cardTemplate = document.querySelector(`#card`).content;
   const photosFragment = document.createDocumentFragment();
+  const featureFragment = document.createDocumentFragment();
 
   const renderAvatar = (imageQuantity) => {
     for (let i = 1; i <= imageQuantity; i++) {
@@ -30,6 +31,15 @@
       photosFragment.appendChild(photosMapCard);
     }
     mapCard.querySelector(`.popup__photos`).appendChild(photosFragment);
+  };
+
+  const createFeatureFragment = (card) => {
+    card.offer.features.forEach((it) => {
+      const featureItem = document.createElement(`li`);
+      featureItem.className = `popup__feature popup__feature--` + it;
+      featureFragment.appendChild(featureItem);
+    });
+    return featureFragment;
   };
 
   window.card = {
@@ -67,6 +77,8 @@
 
       mapCard.querySelector(`.popup__title`).textContent = card.offer.title;
       mapCard.querySelector(`.popup__text--address`).textContent = card.offer.adress;
+      mapCard.querySelector(`.popup__features`).innerHTML = ``;
+      mapCard.querySelector(`.popup__features`).appendChild(createFeatureFragment(card));
       mapCard.querySelector(`.popup__text--price`).textContent = card.offer.price + `₽/ночь`;
       mapCard.querySelector(`.popup__type`).textContent = MAP_ACCOMODATION_LIST[card.offer.type];
       mapCard.querySelector(`.popup__text--capacity`).textContent = card.offer.rooms + ` комнаты для ` + card.offer.guests + ` гостей`;
