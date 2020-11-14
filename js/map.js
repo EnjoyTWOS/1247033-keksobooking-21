@@ -2,7 +2,8 @@
 
 (() => {
   const mapElement = document.querySelector(`.map`);
-  const fragment = document.createDocumentFragment();
+  const pinFragment = document.createDocumentFragment();
+  const cardFragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
   const formHeader = document.querySelector(`.ad-form-header`);
   const formElements = document.querySelectorAll(`.ad-form__element`);
@@ -47,11 +48,13 @@
     }
   };
 
-  const successHandler = (pins) => {
+  const successHandler = (cards) => {
     for (let i = 0; i < cardsTemplateArray.length; i++) {
-      fragment.appendChild(window.pin.render(pins[i]));
+      pinFragment.appendChild(window.pin.render(cards[i]));
+      cardFragment.appendChild(window.card.render(cards[i]));
     }
-    mapPinsTemplate.appendChild(fragment);
+    mapPinsTemplate.appendChild(pinFragment);
+    mapPinsTemplate.appendChild(cardFragment);
   };
 
   const errorHandler = function (errorMessage) {
