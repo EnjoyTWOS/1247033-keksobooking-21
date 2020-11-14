@@ -34,7 +34,7 @@
           title: `Предложение: `,
           adress: `location.x, location.y`,
           price: 10000,
-          type: window.util.getRandomArrI(ACCOMODATION_LIST),
+          type: MAP_ACCOMODATION_LIST[window.util.getRandomArrI(ACCOMODATION_LIST)],
           rooms: window.util.getRandomArrI(ROOMS_QUANTITY),
           guests: window.util.getRandomArrI(GUESTS_QUANTITY),
           checkin: window.util.getRandomArrI(CHECK_IN_OUT_TIME),
@@ -63,14 +63,17 @@
       mapCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + card.offer.checkin + `, выезд до ` + card.offer.checkout;
       mapCard.querySelector(`.popup__description`).textContent = card.offer.description;
       mapCard.querySelector(`.popup__avatar`).setAttribute(`src`, card.author.avatar);
-      mapCard.querySelector(`.popup__photo`).setAttribute(`src`, card.offer.photos[0]);
-      for (let i = 1; i < card.offer.photos.length; i++) {
-        const photosMapCard = mapCard.querySelector(`.popup__photo`).cloneNode(true);
-        photosMapCard.setAttribute(`src`, card.offer.photos[i]);
+      if (card.offer.photos.length > 0) {
+        mapCard.querySelector(`.popup__photo`).setAttribute(`src`, card.offer.photos[0]);
+        for (let i = 1; i < card.offer.photos.length; i++) {
+          const photosMapCard = mapCard.querySelector(`.popup__photo`).cloneNode(true);
+          photosMapCard.setAttribute(`src`, card.offer.photos[i]);
 
-        photosFragment.appendChild(photosMapCard);
+          photosFragment.appendChild(photosMapCard);
+        }
+        mapCard.querySelector(`.popup__photos`).appendChild(photosFragment);
       }
-      mapCard.querySelector(`.popup__photos`).appendChild(photosFragment);
+
 
       return mapCard;
     }
