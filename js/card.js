@@ -74,6 +74,8 @@
     },
     render(card) {
       const mapCard = cardTemplate.cloneNode(true);
+      const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
+
 
       mapCard.querySelector(`.popup__title`).textContent = card.offer.title;
       mapCard.querySelector(`.popup__text--address`).textContent = card.offer.adress;
@@ -84,6 +86,7 @@
       mapCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + card.offer.checkin + `, выезд до ` + card.offer.checkout;
       mapCard.querySelector(`.popup__description`).textContent = card.offer.description;
       mapCard.querySelector(`.popup__avatar`).setAttribute(`src`, card.author.avatar);
+
 
       if (card.offer.rooms === 0 || card.offer.guests === 0) {
         mapCard.querySelector(`.popup__text--capacity`).classList.add(`visually-hidden`);
@@ -96,6 +99,21 @@
       } else {
         mapCard.querySelector(`.popup__photo`).classList.add(`visually-hidden`);
       }
+
+      const closeMapCard = () => {
+        document.querySelector(`.map__card`).remove();
+      };
+
+      const onCloseCardBtnClick = () => {
+        closeMapCard();
+      };
+
+      mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
+
+      const onCardIsEsc = (evt) => {
+        window.util.isEscapeEvent(evt, onCloseCardBtnClick);
+      };
+      document.addEventListener(`keydown`, onCardIsEsc);
 
       return mapCard;
     }

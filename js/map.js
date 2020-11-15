@@ -73,7 +73,7 @@
     window.util.isMainButton(evt, enableElements);
   });
   mapPinMain.addEventListener(`keydown`, (evt) => {
-    window.util.isEnter(evt, enableElements);
+    window.util.isEnterEvent(evt, enableElements);
   });
 
 
@@ -81,5 +81,6 @@
 
   window.map = {
     pinMain: document.querySelector(`.map__pin--main`),
+    element: document.querySelector(`.map`),
   };
 })();

@@ -14,6 +14,16 @@
       mapPin.querySelector(`img`).setAttribute(`src`, pin.author.avatar);
       mapPin.querySelector(`img`).setAttribute(`alt`, pin.offer.title);
 
+      const onPinItemClick = () => {
+        const mapCardRemovable = window.map.element.querySelector(`.map__card`);
+        if (mapCardRemovable) {
+          mapCardRemovable.remove();
+        }
+        window.card.render(pin);
+
+      };
+      mapPin.querySelector(`.map__pin`).addEventListener(`click`, onPinItemClick);
+
       return mapPin;
     }
   };
