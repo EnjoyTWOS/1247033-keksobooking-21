@@ -20,8 +20,8 @@
           mapCardRemovable.remove();
         }
         window.card.render(pin);
-
       };
+
       mapPin.querySelector(`.map__pin`).addEventListener(`click`, onPinItemClick);
 
       return mapPin;
