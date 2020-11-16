@@ -3,7 +3,6 @@
 (() => {
   const mapElement = document.querySelector(`.map`);
   const pinFragment = document.createDocumentFragment();
-  const cardFragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
   const formHeader = document.querySelector(`.ad-form-header`);
   const formElements = document.querySelectorAll(`.ad-form__element`);
@@ -11,11 +10,9 @@
   const mapFeatures = document.querySelectorAll(`.map__feature`);
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
-  let cardsTemplateArray = [];
 
   const init = () => {
     disableElemnts();
-    cardsTemplateArray = window.card.renderMapsCardsArray();
   };
 
   const enableElements = () => {
@@ -48,13 +45,11 @@
     }
   };
 
-  const successHandler = (cards) => {
-    for (let i = 0; i < cardsTemplateArray.length; i++) {
-      pinFragment.appendChild(window.pin.render(cards[i]));
-      cardFragment.appendChild(window.card.render(cards[i]));
+  const successHandler = (pins) => {
+    for (let i = 0; i < pins.length; i++) {
+      pinFragment.appendChild(window.pin.render(pins[i]));
     }
     mapPinsTemplate.appendChild(pinFragment);
-    mapPinsTemplate.appendChild(cardFragment);
   };
 
   const errorHandler = function (errorMessage) {

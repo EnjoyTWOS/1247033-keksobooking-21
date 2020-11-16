@@ -19,11 +19,15 @@
         if (mapCardRemovable) {
           mapCardRemovable.remove();
         }
-        window.card.render(pin);
+        window.map.element.appendChild(window.card.render(pin));
+      };
+      const onPinIsEnter = (evt) => {
+        window.util.isEnterEvent(evt, onPinItemClick);
       };
 
       mapPin.querySelector(`.map__pin`).addEventListener(`click`, onPinItemClick);
-
+      mapPin.querySelector(`.map__pin`).addEventListener(`keydown`, onPinIsEnter);
+      mapPin.querySelector(`.map__pin`).setAttribute(`data-attribute-id`, pin.offer.title);
       return mapPin;
     }
   };
