@@ -7,18 +7,12 @@
   const DragLimit = {
     X: {
       MIN: 0,
-      MAX: 1200
+      MAX: 1200 - MAP_PIN_WIDTH
     },
     Y: {
       MIN: 130,
       MAX: 630
     }
-  };
-  const Border = {
-    TOP: DragLimit.Y.MIN - MAP_PIN_HEIGHT + `px`,
-    BOTTOM: DragLimit.Y.MAX - MAP_PIN_HEIGHT + `px`,
-    LEFT: DragLimit.X.MIN + `px`,
-    RIGHT: DragLimit.X.MAX - MAP_PIN_WIDTH + `px`
   };
 
   window.map.pinMain.addEventListener(`mousedown`, (evt) => {
@@ -50,10 +44,10 @@
       };
 
 
-      if (mainPinPosition.x >= Border.LEFT && mainPinPosition.x <= Border.RIGHT) {
+      if (mainPinPosition.x >= DragLimit.X.MIN && mainPinPosition.x <= DragLimit.X.MAX) {
         window.map.pinMain.style.left = mainPinPosition.x + `px`;
       }
-      if (mainPinPosition.y >= Border.TOP && mainPinPosition.y <= Border.BOTTOM) {
+      if (mainPinPosition.y >= DragLimit.Y.MIN && mainPinPosition.y <= DragLimit.Y.MAX) {
         window.map.pinMain.style.top = mainPinPosition.y + `px`;
       }
 
