@@ -4,6 +4,7 @@
   const MAP_PIN_HEIGHT = 70;
   const MAP_PIN_WIDTH = 50;
   const pinTemplate = document.querySelector(`#pin`).content;
+  const mapElement = document.querySelector(`.map`);
 
   window.pin = {
     render(pin) {
@@ -15,11 +16,11 @@
       mapPin.querySelector(`img`).setAttribute(`alt`, pin.offer.title);
 
       const onPinItemClick = () => {
-        const mapCardRemovable = window.map.element.querySelector(`.map__card`);
+        const mapCardRemovable = mapElement.querySelector(`.map__card`);
         if (mapCardRemovable) {
           mapCardRemovable.remove();
         }
-        window.map.element.appendChild(window.card.render(pin));
+        mapElement.appendChild(window.card.render(pin));
       };
       const onPinIsEnter = (evt) => {
         window.util.isEnterEvent(evt, onPinItemClick);
@@ -29,6 +30,8 @@
       mapPin.querySelector(`.map__pin`).addEventListener(`keydown`, onPinIsEnter);
       mapPin.querySelector(`.map__pin`).setAttribute(`data-attribute-id`, pin.offer.title);
       return mapPin;
-    }
+    },
+    main: document.querySelector(`.map__pin--main`),
+    mapElement: document.querySelector(`.map`),
   };
 })();
