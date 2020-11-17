@@ -120,7 +120,7 @@
     giveAdressActive() {
       formAdressInput.value = (parseInt(window.pin.main.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.pin.main.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
       formAdressInput.setAttribute(`value`, formAdressInput.value);
-      formAdressInput.setAttribute(`disabled`, ``);
+      formAdressInput.setAttribute(`readonly`, ``);
     }
   };
 })();

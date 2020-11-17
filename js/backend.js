@@ -105,19 +105,9 @@
           onLoad(xhr.response);
           renderSuccessMessage();
         } else {
-          onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
-          renderErrorMessage();
+          onError(renderErrorMessage());
         }
       });
-
-      xhr.addEventListener(`error`, () => {
-        onError(`Произошла ошибка соединения`);
-      });
-      xhr.addEventListener(`timeout`, () => {
-        onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
-      });
-
-      xhr.timeout = TIMEOUT_IN_MS;
 
       xhr.open(`POST`, URL_FORM);
       xhr.send(data);

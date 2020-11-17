@@ -28,7 +28,7 @@
 
       mapPin.querySelector(`.map__pin`).addEventListener(`click`, onPinItemClick);
       mapPin.querySelector(`.map__pin`).addEventListener(`keydown`, onPinIsEnter);
-      mapPin.querySelector(`.map__pin`).setAttribute(`data-attribute-id`, pin.offer.title);
+      mapPin.querySelector(`.map__pin`).setAttribute(`id`, `mapPinNotMain`);
       return mapPin;
     },
     main: document.querySelector(`.map__pin--main`),

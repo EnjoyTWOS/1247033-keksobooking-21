@@ -47,10 +47,18 @@
     }
   };
 
+  const removePins = () => {
+    const mapPinsNotMain = document.querySelectorAll(`#mapPinNotMain`);
+    for (const mapPinNotMain of mapPinsNotMain) {
+      mapPinNotMain.remove();
+    }
+  };
+
   const submitHandler = (evt) => {
     window.backend.save(new FormData(adForm), () => {
       adForm.reset();
       disableElemnts();
+      removePins();
     }, errorHandler);
     evt.preventDefault();
   };
