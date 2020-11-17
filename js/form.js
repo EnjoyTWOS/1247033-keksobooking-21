@@ -1,9 +1,7 @@
 'use strict';
 
 (() => {
-  const MAP_PIN_MAIN_ACTIVE_HEIGHT = 84;
   const MAP_PIN_MAIN_DISABLED_HEIGHT = 62;
-  const MAP_PIN_MAIN_WIDTH = 62;
   const FORM_TITLE_MIN_LENGTH = 30;
   const FORM_TITLE_MAX_LENGTH = 100;
   const FORM_MAX_PRICE = 1000000;
@@ -75,7 +73,7 @@
   };
 
   const giveAdressDisabled = () => {
-    formAdressInput.value = (parseInt(window.pin.main.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.pin.main.style.top, 10) + MAP_PIN_MAIN_DISABLED_HEIGHT / 2);
+    formAdressInput.value = (parseInt(window.pin.main.style.left, 10) + window.pin.MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.pin.main.style.top, 10) + MAP_PIN_MAIN_DISABLED_HEIGHT / 2);
   };
 
   const isRoomsValid = () => {
@@ -118,7 +116,6 @@
 
   window.form = {
     giveAdressActive() {
-      formAdressInput.value = (parseInt(window.pin.main.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.pin.main.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
       formAdressInput.setAttribute(`value`, formAdressInput.value);
       formAdressInput.setAttribute(`readonly`, ``);
     }

@@ -1,6 +1,8 @@
 'use strict';
 
 (() => {
+  const MAP_PIN_MAIN_ACTIVE_HEIGHT = 84;
+  const MAP_PIN_MAIN_WIDTH = 62;
   const MAP_PIN_HEIGHT = 70;
   const MAP_PIN_WIDTH = 50;
   const pinTemplate = document.querySelector(`#pin`).content;
@@ -52,7 +54,7 @@
       if (mainPinPosition.y >= DragLimit.Y.MIN && mainPinPosition.y <= DragLimit.Y.MAX) {
         pinMain.style.top = mainPinPosition.y + `px`;
       }
-
+      document.querySelector(`#address`).value = (parseInt(pinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2) + `,` + (parseInt(window.pin.main.style.top, 10) + MAP_PIN_MAIN_ACTIVE_HEIGHT);
     };
 
     const onMouseUp = function (upEvt) {
@@ -102,5 +104,6 @@
     },
     main: document.querySelector(`.map__pin--main`),
     mapElement: document.querySelector(`.map`),
+    MAP_PIN_MAIN_WIDTH: 62
   };
 })();
