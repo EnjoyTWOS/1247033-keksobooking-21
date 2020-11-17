@@ -2,10 +2,16 @@
 
 (() => {
   const ENTER_KEY = `Enter`;
+  const ESCAPE_KEY = `Escape`;
+
   window.util = {
     isEnterEvent(evt, action) {
-      if (evt.keyCode === ENTER_KEY) {
-        evt.preventDefualt();
+      if (evt.key === ENTER_KEY) {
+        action();
+      }
+    },
+    isEscapeEvent(evt, action) {
+      if (evt.key === ESCAPE_KEY) {
         action();
       }
     },

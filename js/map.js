@@ -1,9 +1,10 @@
 'use strict';
 
 (() => {
-  const pinsQuantity = 5;
+  const mapPinMainXConst = 570;
+  const mapPinMainYConst = 375;
   const mapElement = document.querySelector(`.map`);
-  const fragment = document.createDocumentFragment();
+  const pinFragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
   const formHeader = document.querySelector(`.ad-form-header`);
   const formElements = document.querySelectorAll(`.ad-form__element`);
@@ -11,12 +12,10 @@
   const mapFeatures = document.querySelectorAll(`.map__feature`);
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
-  // eslint-disable-next-line no-unused-vars
-  let cardsTemplateArray = [];
+  const formResetButton = document.querySelector(`.ad-form__reset`);
 
   const init = () => {
     disableElemnts();
-    cardsTemplateArray = window.card.renderMapsCardsArray();
   };
 
   const enableElements = () => {
@@ -33,10 +32,14 @@
       mapFeature.removeAttribute(`disabled`, `disabled`);
     }
     window.form.giveAdressActive();
-    window.backend.load(successHandler, errorHandler);
+    window.backend.load(onSuccess, onError);
   };
 
   const disableElemnts = () => {
+    window.pin.mapElement.classList.add(`map--faded`);
+    adForm.classList.add(`ad-form--disabled`);
+    window.pin.main.style.left = mapPinMainXConst + `px`;
+    window.pin.main.style.top = mapPinMainYConst + `px`;
     formHeader.setAttribute(`disabled`, `disabled`);
     for (const formElement of formElements) {
       formElement.setAttribute(`disabled`, `disabled`);
@@ -49,14 +52,35 @@
     }
   };
 
-  const successHandler = (pins) => {
-    for (let i = 0; i < pinsQuantity; i++) {
-      fragment.appendChild(window.pin.render(pins[i]));
+  const removePins = () => {
+    const mapPinsNotMain = document.querySelectorAll(`#mapPinNotMain`);
+    for (const mapPinNotMain of mapPinsNotMain) {
+      mapPinNotMain.remove();
     }
-    mapPinsTemplate.appendChild(fragment);
   };
 
-  const errorHandler = function (errorMessage) {
+  const onSubmit = (evt) => {
+    window.backend.save(new FormData(adForm), () => {
+      adForm.reset();
+      disableElemnts();
+      removePins();
+    }, onError);
+    evt.preventDefault();
+  };
+
+  adForm.addEventListener(`submit`, onSubmit);
+  formResetButton.addEventListener(`click`, () => {
+    adForm.reset();
+  });
+
+  const onSuccess = (pins) => {
+    for (let i = 0; i < pins.length; i++) {
+      pinFragment.appendChild(window.pin.render(pins[i]));
+    }
+    mapPinsTemplate.appendChild(pinFragment);
+  };
+
+  const onError = function (errorMessage) {
     const node = document.createElement(`div`);
     node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
     node.style.position = `absolute`;
@@ -72,13 +96,12 @@
     window.util.isMainButton(evt, enableElements);
   });
   mapPinMain.addEventListener(`keydown`, (evt) => {
-    window.util.isEnter(evt, enableElements);
+    window.util.isEnterEvent(evt, enableElements);
   });
 
 
   init();
 
   window.map = {
-    pinMain: document.querySelector(`.map__pin--main`),
   };
 })();
