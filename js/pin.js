@@ -17,7 +17,7 @@
       const onPinItemClick = () => {
         const mapCardRemovable = window.map.element.querySelector(`.map__card`);
         if (mapCardRemovable) {
-          mapCardRemovable.remove();
+          window.card.close(mapCardRemovable);
         }
         window.map.element.appendChild(window.card.render(pin));
       };

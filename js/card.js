@@ -43,6 +43,24 @@
   };
 
   window.card = {
+    close(mapCard) {
+      const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
+      const closeMapCard = () => {
+        document.querySelector(`.map__card`).remove();
+        document.removeEventListener(`keydown`, onCardIsEsc);
+      };
+
+      const onCloseCardBtnClick = () => {
+        closeMapCard();
+      };
+
+      mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
+
+      const onCardIsEsc = (evt) => {
+        window.util.isEscapeEvent(evt, onCloseCardBtnClick);
+      };
+      document.addEventListener(`keydown`, onCardIsEsc);
+    },
     ACCOMODATION_LIST: [`bungalow`, `flat`, `house`, `palace`],
     renderMapsCardsArray() {
       for (let i = 0; i < PINS_QUANTITY; i++) {
@@ -53,7 +71,7 @@
         },
         offer: {
           title: `Предложение: `,
-          address: `600, 350`,
+          address: `location.x, location.y`,
           price: 10000,
           type: MAP_ACCOMODATION_LIST[window.util.getRandomArrI(ACCOMODATION_LIST)],
           rooms: window.util.getRandomArrI(ROOMS_QUANTITY),
@@ -75,7 +93,6 @@
     },
     render(card) {
       const mapCard = cardTemplate.cloneNode(true);
-      const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
 
       mapCard.querySelector(`.popup__title`).textContent = card.offer.title;
       mapCard.querySelector(`.popup__text--address`).textContent = card.offer.address;
@@ -86,7 +103,6 @@
       mapCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + card.offer.checkin + `, выезд до ` + card.offer.checkout;
       mapCard.querySelector(`.popup__description`).textContent = card.offer.description;
       mapCard.querySelector(`.popup__avatar`).setAttribute(`src`, card.author.avatar);
-
 
       if (card.offer.rooms === 0 || card.offer.guests === 0) {
         mapCard.querySelector(`.popup__text--capacity`).classList.add(`visually-hidden`);
@@ -100,21 +116,7 @@
         mapCard.querySelector(`.popup__photo`).classList.add(`visually-hidden`);
       }
 
-      const closeMapCard = () => {
-        document.querySelector(`.map__card`).remove();
-      };
-
-      const onCloseCardBtnClick = () => {
-        closeMapCard();
-      };
-
-      mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
-
-      const onCardIsEsc = (evt) => {
-        window.util.isEscapeEvent(evt, onCloseCardBtnClick);
-      };
-      mapCardCloseBtn.addEventListener(`keydown`, onCardIsEsc);
-
+      window.card.close(mapCard);
 
       return mapCard;
     }
