@@ -43,6 +43,25 @@
   };
 
   window.card = {
+    close(mapCard) {
+      const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
+      const closeMapCard = () => {
+        document.querySelector(`.map__card`).remove();
+        document.removeEventListener(`keydown`, onCardIsEsc);
+      };
+
+      const onCloseCardBtnClick = () => {
+        closeMapCard();
+      };
+
+      mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
+
+      const onCardIsEsc = (evt) => {
+        window.util.isEscapeEvent(evt, onCloseCardBtnClick);
+      };
+      document.addEventListener(`keydown`, onCardIsEsc);
+    },
+    ACCOMODATION_LIST: [`bungalow`, `flat`, `house`, `palace`],
     renderMapsCardsArray() {
       for (let i = 0; i < PINS_QUANTITY; i++) {
         const mapsCardTemplate =
@@ -52,7 +71,7 @@
         },
         offer: {
           title: `Предложение: `,
-          adress: `location.x, location.y`,
+          address: `location.x, location.y`,
           price: 10000,
           type: MAP_ACCOMODATION_LIST[window.util.getRandomArrI(ACCOMODATION_LIST)],
           rooms: window.util.getRandomArrI(ROOMS_QUANTITY),
@@ -76,7 +95,7 @@
       const mapCard = cardTemplate.cloneNode(true);
 
       mapCard.querySelector(`.popup__title`).textContent = card.offer.title;
-      mapCard.querySelector(`.popup__text--address`).textContent = card.offer.adress;
+      mapCard.querySelector(`.popup__text--address`).textContent = card.offer.address;
       mapCard.querySelector(`.popup__features`).innerHTML = ``;
       mapCard.querySelector(`.popup__features`).appendChild(createFeatureFragment(card));
       mapCard.querySelector(`.popup__text--price`).textContent = card.offer.price + `₽/ночь`;
@@ -96,6 +115,8 @@
       } else {
         mapCard.querySelector(`.popup__photo`).classList.add(`visually-hidden`);
       }
+
+      window.card.close(mapCard);
 
       return mapCard;
     }
