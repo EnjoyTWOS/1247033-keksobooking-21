@@ -26,7 +26,7 @@
         window.util.isEnterEvent(evt, onPinItemClick);
       };
 
-      mapPin.querySelector(`.map__pin`).addEventListener(`click`, (evt) => {
+      mapPin.querySelector(`.map__pin`).addEventListener(`mousedown`, (evt) => {
         const allMapPins = document.querySelectorAll(`.map__pin`);
         for (let oneMapPin of allMapPins) {
           oneMapPin.classList.remove(`map__pin--active`);
