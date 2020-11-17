@@ -29,7 +29,7 @@
       mapFeature.removeAttribute(`disabled`, `disabled`);
     }
     window.form.giveAdressActive();
-    window.backend.load(successHandler, errorHandler);
+    window.backend.load(onSuccess, onError);
   };
 
   const disableElemnts = () => {
@@ -45,14 +45,14 @@
     }
   };
 
-  const successHandler = (pins) => {
+  const onSuccess = (pins) => {
     for (let i = 0; i < pins.length; i++) {
       pinFragment.appendChild(window.pin.render(pins[i]));
     }
     mapPinsTemplate.appendChild(pinFragment);
   };
 
-  const errorHandler = function (errorMessage) {
+  const onError = function (errorMessage) {
     const node = document.createElement(`div`);
     node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
     node.style.position = `absolute`;
