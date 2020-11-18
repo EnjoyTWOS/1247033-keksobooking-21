@@ -16,6 +16,7 @@
   const formResetButton = document.querySelector(`.ad-form__reset`);
   let adverts = [];
 
+
   const init = () => {
     disableElemnts();
   };
@@ -73,9 +74,13 @@
   adForm.addEventListener(`submit`, onSubmit);
   formResetButton.addEventListener(`click`, () => {
     adForm.reset();
+    disableElemnts();
+    removePins();
   });
 
   const onSuccess = (pins) => {
+    removePins();
+    window.pin.removeCard();
     for (let i = 0; i < pins.length && i < MAX_PINS_TO_SHOW; i++) {
       pinFragment.appendChild(window.pin.render(pins[i]));
     }
@@ -96,20 +101,23 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  mapPinMain.addEventListener(`mouseup`, (evt) => {
+  mapPinMain.addEventListener(`mousedown`, (evt) => {
     window.util.isMainButton(evt, enableElements);
   });
   mapPinMain.addEventListener(`keydown`, (evt) => {
     window.util.isEnterEvent(evt, enableElements);
   });
 
+  const getAdverts = () => {
+    return adverts;
+  };
 
   init();
 
   window.map = {
+    getAdverts,
     removePins,
     pinMaxCount: MAX_PINS_TO_SHOW,
-    adverts,
     pinFragment,
     pinsTemplate: mapPinsTemplate
   };

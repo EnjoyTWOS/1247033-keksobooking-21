@@ -25,6 +25,7 @@
     giveTitleAttributes();
     givePriceAttributes();
     giveImagesAttributes();
+    isRoomsValid();
   };
 
   const giveImagesAttributes = () => {
@@ -76,37 +77,26 @@
     formAdressInput.value = (parseInt(window.pin.main.style.left, 10) + window.pin.mapPinMainWidth / 2) + `,` + (parseInt(window.pin.main.style.top, 10) + MAP_PIN_MAIN_DISABLED_HEIGHT / 2);
   };
 
+
   const isRoomsValid = () => {
-    if (roomsQuantityList.value === `1`) {
-      if (guestsQuantityList.value !== `1`) {
-        guestsQuantityList.setCustomValidity(`для 1 гостя`);
-      } else {
-        guestsQuantityList.setCustomValidity(``);
-      }
-    } else if (roomsQuantityList.value === `2`) {
-      if (guestsQuantityList.value !== `1` || guestsQuantityList.value !== `2`) {
-        guestsQuantityList.setCustomValidity(`для 2 гостей или для 1 гостя`);
-      } else {
-        guestsQuantityList.setCustomValidity(``);
-      }
-    } else if (roomsQuantityList.value === `3`) {
-      if (guestsQuantityList.value === `0`) {
-        guestsQuantityList.setCustomValidity(`для 3 гостей, для 2 гостей или для 1 гостя`);
-      } else {
-        guestsQuantityList.setCustomValidity(``);
-      }
-    } else if (roomsQuantityList.value === `100`) {
-      if (guestsQuantityList.value !== `0`) {
-        guestsQuantityList.setCustomValidity(`не для гостей`);
-      } else {
-        guestsQuantityList.setCustomValidity(``);
-      }
+    const roomNumber = parseInt(roomsQuantityList.value, 10);
+    const capacityNumber = parseInt(guestsQuantityList.value, 10);
+    if (roomNumber < capacityNumber) {
+      const message = `Для ваших гостей будет слишком тесно`;
+      guestsQuantityList.setCustomValidity(message);
+    } else if (roomNumber === 100 && capacityNumber !== 0) {
+      const message = `Только без гостей!`;
+      guestsQuantityList.setCustomValidity(message);
+    } else if (roomNumber !== 100 && capacityNumber === 0) {
+      const message = `Попробуйте 100 комнат`;
+      guestsQuantityList.setCustomValidity(message);
     } else {
-      guestsQuantityList.setCustomValidity(``);
+      const message = ``;
+      guestsQuantityList.setCustomValidity(message);
     }
-    guestsQuantityList.reportValidity();
   };
 
+  guestsQuantityList.addEventListener(`change`, isRoomsValid);
   roomsQuantityList.addEventListener(`change`, isRoomsValid);
 
   timeInInput.addEventListener(`change`, onTimeInInputChange);
