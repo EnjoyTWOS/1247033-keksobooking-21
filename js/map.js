@@ -1,22 +1,22 @@
 'use strict';
 
 (() => {
+  const mapElement = document.querySelector(`.map`);
   const pinFragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
   const formHeader = document.querySelector(`.ad-form-header`);
   const formElements = document.querySelectorAll(`.ad-form__element`);
   const mapFilters = document.querySelectorAll(`.map__filter`);
   const mapFeatures = document.querySelectorAll(`.map__feature`);
-  const mapPinsTemplate = window.pin.mapElement.querySelector(`.map__pins`);
+  const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
-  const formResetButton = document.querySelector(`.ad-form__reset`);
 
   const init = () => {
     disableElemnts();
   };
 
   const enableElements = () => {
-    window.pin.mapElement.classList.remove(`map--faded`);
+    mapElement.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
     formHeader.removeAttribute(`disabled`, `disabled`);
     for (const formElement of formElements) {
@@ -33,8 +33,6 @@
   };
 
   const disableElemnts = () => {
-    window.pin.mapElement.classList.add(`map--faded`);
-    adForm.classList.add(`ad-form--disabled`);
     formHeader.setAttribute(`disabled`, `disabled`);
     for (const formElement of formElements) {
       formElement.setAttribute(`disabled`, `disabled`);
@@ -46,27 +44,6 @@
       mapFeature.setAttribute(`disabled`, `disabled`);
     }
   };
-
-  const removePins = () => {
-    const mapPinsNotMain = document.querySelectorAll(`#mapPinNotMain`);
-    for (const mapPinNotMain of mapPinsNotMain) {
-      mapPinNotMain.remove();
-    }
-  };
-
-  const submitHandler = (evt) => {
-    window.backend.save(new FormData(adForm), () => {
-      adForm.reset();
-      disableElemnts();
-      removePins();
-    }, errorHandler);
-    evt.preventDefault();
-  };
-
-  adForm.addEventListener(`submit`, submitHandler);
-  formResetButton.addEventListener(`click`, () => {
-    adForm.reset();
-  });
 
   const successHandler = (pins) => {
     for (let i = 0; i < pins.length; i++) {
@@ -97,4 +74,8 @@
 
   init();
 
+  window.map = {
+    pinMain: document.querySelector(`.map__pin--main`),
+    element: document.querySelector(`.map`),
+  };
 })();
