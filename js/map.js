@@ -1,6 +1,9 @@
 'use strict';
 
 (() => {
+  const MAX_PINS_TO_SHOW = 5;
+  const MAP_PIN_MAIN_X_CONST = 570;
+  const MAP_PIN_MAIN_Y_CONST = 375;
   const mapElement = document.querySelector(`.map`);
   const pinFragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
@@ -10,6 +13,9 @@
   const mapFeatures = document.querySelectorAll(`.map__feature`);
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
+  const formResetButton = document.querySelector(`.ad-form__reset`);
+  let adverts = [];
+
 
   const init = () => {
     disableElemnts();
@@ -29,10 +35,14 @@
       mapFeature.removeAttribute(`disabled`, `disabled`);
     }
     window.form.giveAdressActive();
-    window.backend.load(successHandler, errorHandler);
+    window.backend.load(onSuccess, onError);
   };
 
   const disableElemnts = () => {
+    window.pin.mapElement.classList.add(`map--faded`);
+    adForm.classList.add(`ad-form--disabled`);
+    window.pin.main.style.left = MAP_PIN_MAIN_X_CONST + `px`;
+    window.pin.main.style.top = MAP_PIN_MAIN_Y_CONST + `px`;
     formHeader.setAttribute(`disabled`, `disabled`);
     for (const formElement of formElements) {
       formElement.setAttribute(`disabled`, `disabled`);
@@ -45,14 +55,41 @@
     }
   };
 
-  const successHandler = (pins) => {
-    for (let i = 0; i < pins.length; i++) {
+  const removePins = () => {
+    const mapPinsNotMain = document.querySelectorAll(`#mapPinNotMain`);
+    for (const mapPinNotMain of mapPinsNotMain) {
+      mapPinNotMain.remove();
+    }
+  };
+
+  const onSubmit = (evt) => {
+    window.backend.save(new FormData(adForm), () => {
+      adForm.reset();
+      disableElemnts();
+      removePins();
+    }, onError);
+    evt.preventDefault();
+  };
+
+  adForm.addEventListener(`submit`, onSubmit);
+  formResetButton.addEventListener(`click`, () => {
+    adForm.reset();
+    disableElemnts();
+    removePins();
+  });
+
+  const onSuccess = (pins) => {
+    removePins();
+    window.pin.removeCard();
+    for (let i = 0; i < pins.length && i < MAX_PINS_TO_SHOW; i++) {
       pinFragment.appendChild(window.pin.render(pins[i]));
     }
+
+    adverts = pins;
     mapPinsTemplate.appendChild(pinFragment);
   };
 
-  const errorHandler = function (errorMessage) {
+  const onError = function (errorMessage) {
     const node = document.createElement(`div`);
     node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
     node.style.position = `absolute`;
@@ -71,11 +108,17 @@
     window.util.isEnterEvent(evt, enableElements);
   });
 
+  const getAdverts = () => {
+    return adverts;
+  };
 
   init();
 
   window.map = {
-    pinMain: document.querySelector(`.map__pin--main`),
-    element: document.querySelector(`.map`),
+    getAdverts,
+    removePins,
+    pinMaxCount: MAX_PINS_TO_SHOW,
+    pinFragment,
+    pinsTemplate: mapPinsTemplate
   };
 })();
