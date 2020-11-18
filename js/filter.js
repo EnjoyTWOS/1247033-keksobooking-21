@@ -10,7 +10,7 @@
 
   const filterAdvert = () => {
     let filteredAdverts = [];
-    for (const advert of adverts) {
+    for (const advert of window.map.adverts) {
       if (
         checkType(advert.offer.type)
       ) {
