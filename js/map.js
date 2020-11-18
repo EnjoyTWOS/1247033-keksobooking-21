@@ -1,8 +1,9 @@
 'use strict';
 
 (() => {
-  const mapPinMainXConst = 570;
-  const mapPinMainYConst = 375;
+  const MAX_PINS_TO_SHOW = 5;
+  const MAP_PIN_MAIN_X_CONST = 570;
+  const MAP_PIN_MAIN_Y_CONST = 375;
   const mapElement = document.querySelector(`.map`);
   const pinFragment = document.createDocumentFragment();
   const adForm = document.querySelector(`.ad-form`);
@@ -13,6 +14,7 @@
   const mapPinsTemplate = mapElement.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
   const formResetButton = document.querySelector(`.ad-form__reset`);
+  let adverts = [];
 
   const init = () => {
     disableElemnts();
@@ -38,8 +40,8 @@
   const disableElemnts = () => {
     window.pin.mapElement.classList.add(`map--faded`);
     adForm.classList.add(`ad-form--disabled`);
-    window.pin.main.style.left = mapPinMainXConst + `px`;
-    window.pin.main.style.top = mapPinMainYConst + `px`;
+    window.pin.main.style.left = MAP_PIN_MAIN_X_CONST + `px`;
+    window.pin.main.style.top = MAP_PIN_MAIN_Y_CONST + `px`;
     formHeader.setAttribute(`disabled`, `disabled`);
     for (const formElement of formElements) {
       formElement.setAttribute(`disabled`, `disabled`);
@@ -74,9 +76,11 @@
   });
 
   const onSuccess = (pins) => {
-    for (let i = 0; i < pins.length; i++) {
+    for (let i = 0; i < pins.length && i < MAX_PINS_TO_SHOW; i++) {
       pinFragment.appendChild(window.pin.render(pins[i]));
     }
+
+    adverts = pins;
     mapPinsTemplate.appendChild(pinFragment);
   };
 
@@ -92,7 +96,7 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  mapPinMain.addEventListener(`mousedown`, (evt) => {
+  mapPinMain.addEventListener(`mouseup`, (evt) => {
     window.util.isMainButton(evt, enableElements);
   });
   mapPinMain.addEventListener(`keydown`, (evt) => {
@@ -103,5 +107,10 @@
   init();
 
   window.map = {
+    removePins,
+    pinMaxCount: MAX_PINS_TO_SHOW,
+    adverts,
+    pinFragment,
+    pinsTemplate: mapPinsTemplate
   };
 })();

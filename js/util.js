@@ -28,6 +28,6 @@
     getRandomArrI(arr) {
       const randomize = Math.floor(Math.random() * arr.length);
       return arr[randomize];
-    }
+    },
   };
 })();

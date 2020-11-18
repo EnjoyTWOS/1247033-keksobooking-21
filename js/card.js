@@ -52,6 +52,7 @@
 
       const onCloseCardBtnClick = () => {
         closeMapCard();
+        window.pin.removeHighlighter();
       };
 
       mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);

@@ -8,6 +8,7 @@
   const pinTemplate = document.querySelector(`#pin`).content;
   const mapElement = document.querySelector(`.map`);
   const pinMain = document.querySelector(`.map__pin--main`);
+
   const DragLimit = {
     X: {
       MIN: 0,
@@ -69,7 +70,20 @@
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
+  const removeCard = () => {
+    const mapCardRemovable = mapElement.querySelector(`.map__card`);
+    if (mapCardRemovable) {
+      mapCardRemovable.remove();
+    }
+  };
+
   window.pin = {
+    removeHighlighter() {
+      const allMapPins = document.querySelectorAll(`.map__pin`);
+      for (let oneMapPin of allMapPins) {
+        oneMapPin.classList.remove(`map__pin--active`);
+      }
+    },
     render(pin) {
       const mapPin = pinTemplate.cloneNode(true);
 
@@ -79,21 +93,16 @@
       mapPin.querySelector(`img`).setAttribute(`alt`, pin.offer.title);
 
       const onPinItemClick = () => {
-        const mapCardRemovable = mapElement.querySelector(`.map__card`);
-        if (mapCardRemovable) {
-          mapCardRemovable.remove();
-        }
+        removeCard();
         mapElement.appendChild(window.card.render(pin));
       };
+
       const onPinIsEnter = (evt) => {
         window.util.isEnterEvent(evt, onPinItemClick);
       };
 
       mapPin.querySelector(`.map__pin`).addEventListener(`mousedown`, (evt) => {
-        const allMapPins = document.querySelectorAll(`.map__pin`);
-        for (let oneMapPin of allMapPins) {
-          oneMapPin.classList.remove(`map__pin--active`);
-        }
+        window.pin.removeHighlighter();
         evt.target.classList.add(`map__pin--active`);
       });
 
@@ -102,8 +111,9 @@
       mapPin.querySelector(`.map__pin`).setAttribute(`id`, `mapPinNotMain`);
       return mapPin;
     },
-    main: document.querySelector(`.map__pin--main`),
-    mapElement: document.querySelector(`.map`),
-    MAP_PIN_MAIN_WIDTH: 62
+    main: pinMain,
+    mapElement,
+    mapPinMainWidth: MAP_PIN_MAIN_WIDTH,
+    removeCard
   };
 })();
