@@ -109,6 +109,13 @@
         }
       });
 
+      xhr.addEventListener(`error`, () => {
+        onError(renderErrorMessage());
+      });
+      xhr.addEventListener(`timeout`, () => {
+        onError(renderErrorMessage());
+      });
+
       xhr.open(`POST`, URL_FORM);
       xhr.send(data);
     }
