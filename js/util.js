@@ -23,13 +23,6 @@
         }
       }
     },
-    rand(min, max) {
-      return min + Math.floor(Math.random() * (max - min));
-    },
-    getRandomArrI(arr) {
-      const randomize = Math.floor(Math.random() * arr.length);
-      return arr[randomize];
-    },
     debounce(cb) {
       let lastTimeout = null;
 

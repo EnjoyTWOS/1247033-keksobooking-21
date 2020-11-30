@@ -62,21 +62,20 @@
     }
   };
 
+  const refreshPage = () => {
+    window.pin.removeCard();
+    adForm.reset();
+    disableElemnts();
+    removePins();
+  };
+
   const onSubmit = (evt) => {
-    window.backend.save(new FormData(adForm), () => {
-      adForm.reset();
-      disableElemnts();
-      removePins();
-    }, onError);
+    window.backend.save(new FormData(adForm), refreshPage, onError);
     evt.preventDefault();
   };
 
   adForm.addEventListener(`submit`, onSubmit);
-  formResetButton.addEventListener(`click`, () => {
-    adForm.reset();
-    disableElemnts();
-    removePins();
-  });
+  formResetButton.addEventListener(`click`, refreshPage);
 
   const onSuccess = (pins) => {
     removePins();
