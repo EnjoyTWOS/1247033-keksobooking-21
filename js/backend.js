@@ -17,27 +17,16 @@
 
     const errorMessageClose = () => {
       document.querySelector(`.error`).remove();
+      document.removeEventListener(`click`, errorMessageClose);
+      document.removeEventListener(`keydown`, onErrorIsEsc);
     };
 
     const onErrorIsEsc = (evt) => {
       window.util.isEscapeEvent(evt, errorMessageClose);
     };
 
-    const onEscRemoveListeners = (evt) => {
-      window.util.isEscapeEvent(evt, onErrorRemoveListeners);
-    };
-
-    const onErrorRemoveListeners = () => {
-      document.removeEventListener(`click`, errorMessageClose);
-      document.removeEventListener(`keydown`, onErrorIsEsc);
-    };
-
     document.addEventListener(`click`, errorMessageClose);
     document.addEventListener(`keydown`, onErrorIsEsc);
-    document.addEventListener(`click`, () => {
-      onErrorRemoveListeners();
-    });
-    document.addEventListener(`keydown`, onEscRemoveListeners);
   };
 
   const renderSuccessMessage = () => {
@@ -46,6 +35,8 @@
 
     const successMessageClose = () => {
       document.querySelector(`.success`).remove();
+      document.removeEventListener(`click`, successMessageClose);
+      document.removeEventListener(`keydown`, onSuccessIsEsc);
     };
 
     const onSuccessIsEsc = (evt) => {
@@ -55,21 +46,8 @@
     document.addEventListener(`click`, successMessageClose);
     document.addEventListener(`keydown`, onSuccessIsEsc);
 
-    const onEscRemoveListeners = (evt) => {
-      window.util.isEscapeEvent(evt, onSuccessRemoveListeners);
-    };
-
-    const onSuccessRemoveListeners = () => {
-      document.removeEventListener(`click`, successMessageClose);
-      document.removeEventListener(`keydown`, onSuccessIsEsc);
-    };
-
     document.addEventListener(`click`, successMessageClose);
     document.addEventListener(`keydown`, onSuccessIsEsc);
-    document.addEventListener(`click`, () => {
-      onSuccessRemoveListeners();
-    });
-    document.addEventListener(`keydown`, onEscRemoveListeners);
   };
 
   window.backend = {
