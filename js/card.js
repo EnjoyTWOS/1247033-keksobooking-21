@@ -8,9 +8,10 @@
 
 
   const createPhotosFragment = (card, mapCard) => {
-    mapCard.querySelector(`.popup__photo`).setAttribute(`src`, card.offer.photos[0]);
+    const cardPhoto = mapCard.querySelector(`.popup__photo`);
+    cardPhoto.setAttribute(`src`, card.offer.photos[0]);
     for (let i = 1; i < card.offer.photos.length; i++) {
-      const photosMapCard = mapCard.querySelector(`.popup__photo`).cloneNode(true);
+      const photosMapCard = cardPhoto.cloneNode(true);
       photosMapCard.setAttribute(`src`, card.offer.photos[i]);
 
       photosFragment.appendChild(photosMapCard);
