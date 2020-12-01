@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const ANY_INPUT_VALUE = `any`
   const PRICE_MIN_LIMIT = 10000;
   const PRICE_MAX_LIMIT = 50000;
   const Price = {
@@ -15,9 +16,8 @@
   const filterRoomsInput = filterForm.querySelector(`#housing-rooms`);
   const filterGuestsInput = filterForm.querySelector(`#housing-guests`);
 
-
   const checkType = (type) => {
-    return filterTypeInput.value === `any` || filterTypeInput.value === type;
+    return filterTypeInput.value === ANY_INPUT_VALUE || filterTypeInput.value === type;
   };
 
   const checkPrice = (price) => {
@@ -41,11 +41,11 @@
   };
 
   const checkGuests = (guestsQuantity) => {
-    return filterGuestsInput.value === `any` || parseInt(filterGuestsInput.value, 10) === guestsQuantity;
+    return filterGuestsInput.value === ANY_INPUT_VALUE || parseInt(filterGuestsInput.value, 10) === guestsQuantity;
   };
 
   const checkRooms = (roomsQuantity) => {
-    return filterRoomsInput.value === `any` || parseInt(filterRoomsInput.value, 10) === roomsQuantity;
+    return filterRoomsInput.value === ANY_INPUT_VALUE || parseInt(filterRoomsInput.value, 10) === roomsQuantity;
   };
 
   const checkFeatures = (features) => {
@@ -92,4 +92,8 @@
   const onFilterPinsDebounce = window.util.debounce(filterPins);
 
   filterForm.addEventListener(`change`, onFilterPinsDebounce);
+
+  window.filter = {
+    form: filterForm
+  };
 })();

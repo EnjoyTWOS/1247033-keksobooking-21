@@ -62,11 +62,13 @@
     }
   };
 
+
   const refreshPage = () => {
     window.pin.removeCard();
     adForm.reset();
     disableElemnts();
     removePins();
+    window.filter.form.reset();
   };
 
   const onSubmit = (evt) => {

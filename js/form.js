@@ -9,6 +9,9 @@
   const FLAT_MIN_PRICE = 1000;
   const HOUSE_MIN_PRICE = 5000;
   const PALACE_MIN_PRICE = 10000;
+  const TOO_MANY_GUESTS_MESSAGE = `Для ваших гостей будет слишком тесно`;
+  const NO_GUESTS_MESSAGE = `Только без гостей!`;
+  const HUNDRED_ROOMS_MESSAGE = `Попробуйте 100 комнат`;
   const accomodationTypeInput = document.querySelector(`#type`);
   const formAdressInput = document.querySelector(`#address`);
   const roomsQuantityList = document.querySelector(`#room_number`);
@@ -82,14 +85,11 @@
     const roomNumber = parseInt(roomsQuantityList.value, 10);
     const capacityNumber = parseInt(guestsQuantityList.value, 10);
     if (roomNumber < capacityNumber) {
-      const message = `Для ваших гостей будет слишком тесно`;
-      guestsQuantityList.setCustomValidity(message);
+      guestsQuantityList.setCustomValidity(TOO_MANY_GUESTS_MESSAGE);
     } else if (roomNumber === 100 && capacityNumber !== 0) {
-      const message = `Только без гостей!`;
-      guestsQuantityList.setCustomValidity(message);
+      guestsQuantityList.setCustomValidity(NO_GUESTS_MESSAGE);
     } else if (roomNumber !== 100 && capacityNumber === 0) {
-      const message = `Попробуйте 100 комнат`;
-      guestsQuantityList.setCustomValidity(message);
+      guestsQuantityList.setCustomValidity(HUNDRED_ROOMS_MESSAGE);
     } else {
       const message = ``;
       guestsQuantityList.setCustomValidity(message);
