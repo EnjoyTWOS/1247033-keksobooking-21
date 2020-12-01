@@ -33,7 +33,7 @@
       const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
       const closeMapCard = () => {
         document.querySelector(`.map__card`).remove();
-        document.removeEventListener(`keydown`, onCardIsEsc);
+        document.removeEventListener(`keydown`, onEscClickCardClose);
       };
 
       const onCloseCardBtnClick = () => {
@@ -43,10 +43,10 @@
 
       mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
 
-      const onCardIsEsc = (evt) => {
+      const onEscClickCardClose = (evt) => {
         window.util.isEscapeEvent(evt, onCloseCardBtnClick);
       };
-      document.addEventListener(`keydown`, onCardIsEsc);
+      document.addEventListener(`keydown`, onEscClickCardClose);
     },
     render(card) {
       const mapCard = cardTemplate.cloneNode(true);

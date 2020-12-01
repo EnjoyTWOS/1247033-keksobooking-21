@@ -15,39 +15,36 @@
     const errorMessage = errorMessageTemplate.cloneNode(true);
     main.appendChild(errorMessage);
 
-    const errorMessageClose = () => {
+    const onErrorMessageClose = () => {
       document.querySelector(`.error`).remove();
-      document.removeEventListener(`click`, errorMessageClose);
-      document.removeEventListener(`keydown`, onErrorIsEsc);
+      document.removeEventListener(`click`, onErrorMessageClose);
+      document.removeEventListener(`keydown`, onEscClickErrorMessageClose);
     };
 
-    const onErrorIsEsc = (evt) => {
-      window.util.isEscapeEvent(evt, errorMessageClose);
+    const onEscClickErrorMessageClose = (evt) => {
+      window.util.isEscapeEvent(evt, onErrorMessageClose);
     };
 
-    document.addEventListener(`click`, errorMessageClose);
-    document.addEventListener(`keydown`, onErrorIsEsc);
+    document.addEventListener(`click`, onErrorMessageClose);
+    document.addEventListener(`keydown`, onEscClickErrorMessageClose);
   };
 
   const renderSuccessMessage = () => {
     const successMessage = successMessageTemplate.cloneNode(true);
     main.appendChild(successMessage);
 
-    const successMessageClose = () => {
+    const onSuccessMessageClose = () => {
       document.querySelector(`.success`).remove();
-      document.removeEventListener(`click`, successMessageClose);
-      document.removeEventListener(`keydown`, onSuccessIsEsc);
+      document.removeEventListener(`click`, onSuccessMessageClose);
+      document.removeEventListener(`keydown`, onEscClickSuccessMessageClose);
     };
 
-    const onSuccessIsEsc = (evt) => {
-      window.util.isEscapeEvent(evt, successMessageClose);
+    const onEscClickSuccessMessageClose = (evt) => {
+      window.util.isEscapeEvent(evt, onSuccessMessageClose);
     };
 
-    document.addEventListener(`click`, successMessageClose);
-    document.addEventListener(`keydown`, onSuccessIsEsc);
-
-    document.addEventListener(`click`, successMessageClose);
-    document.addEventListener(`keydown`, onSuccessIsEsc);
+    document.addEventListener(`click`, onSuccessMessageClose);
+    document.addEventListener(`keydown`, onEscClickSuccessMessageClose);
   };
 
   window.backend = {

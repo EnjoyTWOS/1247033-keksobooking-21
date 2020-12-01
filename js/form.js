@@ -28,7 +28,7 @@
     giveTitleAttributes();
     givePriceAttributes();
     giveImagesAttributes();
-    isRoomsValid();
+    onRoomsAndGuestsValidation();
   };
 
   const giveImagesAttributes = () => {
@@ -57,7 +57,7 @@
     formPrice.setAttribute(`min`, FLAT_MIN_PRICE);
     formPrice.setAttribute(`placeholder`, FLAT_MIN_PRICE);
 
-    const minPriceChanger = () => {
+    const onMinPriceChange = () => {
       if (accomodationTypeInput.value === window.card.ACCOMODATION_LIST[0]) {
         formPrice.setAttribute(`min`, BUNGALOW_MIN_PRICE);
         formPrice.setAttribute(`placeholder`, BUNGALOW_MIN_PRICE);
@@ -73,7 +73,7 @@
       }
     };
 
-    accomodationTypeInput.addEventListener(`change`, minPriceChanger);
+    accomodationTypeInput.addEventListener(`change`, onMinPriceChange);
   };
 
   const giveAdressDisabled = () => {
@@ -81,7 +81,7 @@
   };
 
 
-  const isRoomsValid = () => {
+  const onRoomsAndGuestsValidation = () => {
     const roomNumber = parseInt(roomsQuantityList.value, 10);
     const capacityNumber = parseInt(guestsQuantityList.value, 10);
     if (roomNumber < capacityNumber) {
@@ -96,8 +96,8 @@
     }
   };
 
-  guestsQuantityList.addEventListener(`change`, isRoomsValid);
-  roomsQuantityList.addEventListener(`change`, isRoomsValid);
+  guestsQuantityList.addEventListener(`change`, onRoomsAndGuestsValidation);
+  roomsQuantityList.addEventListener(`change`, onRoomsAndGuestsValidation);
 
   timeInInput.addEventListener(`change`, onTimeInInputChange);
   timeOutInput.addEventListener(`change`, onTimeOutInputChange);

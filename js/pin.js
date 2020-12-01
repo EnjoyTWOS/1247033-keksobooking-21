@@ -97,7 +97,7 @@
         mapElement.appendChild(window.card.render(pin));
       };
 
-      const onPinIsEnter = (evt) => {
+      const onPinEnterClick = (evt) => {
         window.util.isEnterEvent(evt, onPinItemClick);
       };
 
@@ -107,7 +107,7 @@
       });
 
       mapPin.querySelector(`.map__pin`).addEventListener(`click`, onPinItemClick);
-      mapPin.querySelector(`.map__pin`).addEventListener(`keydown`, onPinIsEnter);
+      mapPin.querySelector(`.map__pin`).addEventListener(`keydown`, onPinEnterClick);
       mapPin.querySelector(`.map__pin`).setAttribute(`id`, `mapPinNotMain`);
       return mapPin;
     },

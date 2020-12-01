@@ -63,7 +63,7 @@
   };
 
 
-  const refreshPage = () => {
+  const onPageRefresh = () => {
     window.pin.removeCard();
     adForm.reset();
     disableElemnts();
@@ -71,13 +71,13 @@
     window.filter.form.reset();
   };
 
-  const onSubmit = (evt) => {
-    window.backend.save(new FormData(adForm), refreshPage, onError);
+  const onSubmitClick = (evt) => {
+    window.backend.save(new FormData(adForm), onPageRefresh, onError);
     evt.preventDefault();
   };
 
-  adForm.addEventListener(`submit`, onSubmit);
-  formResetButton.addEventListener(`click`, refreshPage);
+  adForm.addEventListener(`submit`, onSubmitClick);
+  formResetButton.addEventListener(`click`, onPageRefresh);
 
   const onSuccess = (pins) => {
     removePins();
