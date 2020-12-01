@@ -64,7 +64,7 @@
 
 
   const onPageRefresh = () => {
-    window.pin.removeCard();
+    window.card.remove();
     adForm.reset();
     disableElemnts();
     removePins();
@@ -81,7 +81,7 @@
 
   const onSuccess = (pins) => {
     removePins();
-    window.pin.removeCard();
+    window.card.remove();
     for (let i = 0; i < pins.length && i < MAX_PINS_TO_SHOW; i++) {
       pinFragment.appendChild(window.pin.render(pins[i]));
     }

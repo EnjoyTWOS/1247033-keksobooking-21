@@ -29,28 +29,24 @@
   };
 
 
+  const onEscClose = (evt) => {
+    window.util.isEscapeEvent(evt, removeCard)
+  };
+
+  const removeCard = () => {
+    const mapCardRemovable = window.pin.mapElement.querySelector(`.map__card`);
+    if (mapCardRemovable) {
+      mapCardRemovable.remove();
+      document.removeEventListener(`keydown`, onEscClose);
+    }
+  };
+
+
   window.card = {
-    close(mapCard) {
-      const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
-      const closeMapCard = () => {
-        document.querySelector(`.map__card`).remove();
-        document.removeEventListener(`keydown`, onEscClickCardClose);
-      };
-
-      const onCloseCardBtnClick = () => {
-        closeMapCard();
-        window.pin.removeHighlighter();
-      };
-
-      mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
-
-      const onEscClickCardClose = (evt) => {
-        window.util.isEscapeEvent(evt, onCloseCardBtnClick);
-      };
-      document.addEventListener(`keydown`, onEscClickCardClose);
-    },
+    remove: removeCard,
     render(card) {
       const mapCard = cardTemplate.cloneNode(true);
+      const mapCardCloseBtn = mapCard.querySelector(`.popup__close`);
 
       if (card.offer) {
         mapCard.querySelector(`.popup__title`).textContent = card.offer.title;
@@ -75,7 +71,13 @@
           mapCard.querySelector(`.popup__photo`).classList.add(`visually-hidden`);
         }
 
-        window.card.close(mapCard);
+        const onCloseCardBtnClick = () => {
+          removeCard();
+          window.pin.removeHighlighter();
+        };
+
+        document.addEventListener(`keydown`, onEscClose);
+        mapCardCloseBtn.addEventListener(`click`, onCloseCardBtnClick);
       }
       return mapCard;
     }

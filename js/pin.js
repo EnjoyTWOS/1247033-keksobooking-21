@@ -70,12 +70,6 @@
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
-  const removeCard = () => {
-    const mapCardRemovable = mapElement.querySelector(`.map__card`);
-    if (mapCardRemovable) {
-      mapCardRemovable.remove();
-    }
-  };
 
   window.pin = {
     removeHighlighter() {
@@ -93,7 +87,7 @@
       mapPin.querySelector(`img`).setAttribute(`alt`, pin.offer.title);
 
       const onPinItemClick = () => {
-        removeCard();
+        window.card.remove();
         mapElement.appendChild(window.card.render(pin));
       };
 
@@ -114,6 +108,5 @@
     main: pinMain,
     mapElement,
     mapPinMainWidth: MAP_PIN_MAIN_WIDTH,
-    removeCard
   };
 })();

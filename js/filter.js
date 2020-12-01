@@ -81,7 +81,7 @@
 
   const filterPins = () => {
     window.map.removePins();
-    window.pin.removeCard();
+    window.card.remove();
     const filteredAdverts = filterAdvert();
     for (let i = 0; i < filteredAdverts.length; i++) {
       window.map.pinFragment.appendChild(window.pin.render(filteredAdverts[i]));
