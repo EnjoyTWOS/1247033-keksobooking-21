@@ -11,12 +11,12 @@
 
   const DragLimit = {
     X: {
-      MIN: 0,
-      MAX: 1200 - MAP_PIN_WIDTH
+      MIN: 0 - MAP_PIN_MAIN_WIDTH / 2,
+      MAX: 1200 - MAP_PIN_MAIN_WIDTH / 2
     },
     Y: {
-      MIN: 130,
-      MAX: 630
+      MIN: 130 - MAP_PIN_MAIN_ACTIVE_HEIGHT,
+      MAX: 630 - MAP_PIN_MAIN_ACTIVE_HEIGHT
     }
   };
 
