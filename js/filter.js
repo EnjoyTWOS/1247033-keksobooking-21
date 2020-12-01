@@ -83,7 +83,7 @@
     window.map.removePins();
     window.pin.removeCard();
     const filteredAdverts = filterAdvert();
-    for (let i = 0; i < filteredAdverts.length && i < window.map.pinMaxCount; i++) {
+    for (let i = 0; i < filteredAdverts.length; i++) {
       window.map.pinFragment.appendChild(window.pin.render(filteredAdverts[i]));
     }
     window.map.pinsTemplate.appendChild(window.map.pinFragment);
