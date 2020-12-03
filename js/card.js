@@ -30,7 +30,7 @@
 
 
   const onEscClose = (evt) => {
-    window.util.isEscapeEvent(evt, removeCard)
+    window.util.isEscapeEvent(evt, removeCard);
   };
 
   const removeCard = () => {

@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const ANY_INPUT_VALUE = `any`
+  const ANY_INPUT_VALUE = `any`;
   const PRICE_MIN_LIMIT = 10000;
   const PRICE_MAX_LIMIT = 50000;
   const Price = {
